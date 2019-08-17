@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="module_launcher" default="compile.module.launcher">
+    <dirname property="module.launcher.basedir" file="${ant.file.module_launcher}"/>
+
+    <property name="module.jdk.home.launcher" value="${project.jdk.home}"/>
+    <property name="module.jdk.classpath.launcher" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.launcher" value="${compiler.args}"/>
+
+    <property name="launcher.output.dir" value="${module.launcher.basedir}/classes"/>
+    <property name="launcher.testoutput.dir" value="${module.launcher.basedir}/classes"/>
+
+    <path id="launcher.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="launcher.module.classpath">
+        <path refid="${module.jdk.classpath.launcher}"/>
+        <pathelement location="${module.launcher.basedir}/resources"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.launcher"/>
+
+    <patternset id="excluded.from.compilation.launcher">
+        <patternset refid="excluded.from.module.launcher"/>
+        <patternset refid="compiler.excluded"/>
+    </patternset>
+
+    <path id="launcher.module.sourcepath">
+        <dirset dir="${module.launcher.basedir}">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.launcher" depends="compile.module.launcher.production,compile.module.launcher.tests" description="compile module launcher"/>
+
+    <target name="compile.module.launcher.production" description="compile module launcher production classes">
+        <mkdir dir="${launcher.output.dir}"/>
+        <javac destdir="${launcher.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memoryMaximumSize="${compiler.max.memory}" fork="true" executable="${module.jdk.home.launcher}/bin/javac">
+            <compilerarg line="${compiler.args.launcher}"/>
+            <bootclasspath refid="launcher.module.bootclasspath"/>
+            <classpath refid="launcher.module.classpath"/>
+            <src refid="launcher.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.launcher"/>
+        </javac>
+        <copy todir="${launcher.output.dir}">
+            <fileset dir="${module.launcher.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+                <patternset refid="excluded.from.compilation.launcher"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.launcher.tests" depends="compile.module.launcher.production" description="compile module launcher test classes" unless="skip.tests"/>
+
+    <target name="clean.module.launcher" description="cleanup module">
+        <delete dir="${launcher.output.dir}"/>
+        <delete dir="${launcher.testoutput.dir}"/>
+    </target>
+</project>

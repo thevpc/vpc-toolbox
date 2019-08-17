@@ -1,0 +1,70 @@
+// Template for a Marvin Obfuscator config file
+
+//////////////////////////////////////////////////////////////////////////////
+// Directories and jar/zip archives where your application's classes reside
+// (relative to project directory)
+
+classpath=(".")
+
+//////////////////////////////////////////////////////////////////////////////
+// The name of your applet or applications's main class
+// (e.g. executable class, servlet or applet)
+// (as it would appear in <applet code=...> or in "java ...")
+// Note the double parentheses!
+
+mainClasses=(("net.vpc.toolbox.jlauncher.JLauncher"))
+
+// If you want your main class to be called differently after the obfuscation,
+// you can enter the new name (including package) like this:
+//
+// mainClasses=(("myapp.Main" newName="main"))
+//
+// You can also have more than one main class:
+//
+// mainClasses=(("myapp.ServletA") ("myapp.ServletB"))
+
+//////////////////////////////////////////////////////////////////////////////
+// Names of methods (without class name) that are accessed via reflection.
+// The obfuscator will not change the names of these methods.
+
+//preserveMethodNames=("methodName1","methodName2","reflected*")
+
+//////////////////////////////////////////////////////////////////////////////
+// Classes that are accessed via reflection.
+// The obfuscator will not change the names of these classes.
+// Note: Method names within these classes will still be obfuscated.
+//       (If you need to preserve method names too, what you probably want
+//       is "externalClasses".)
+// Note: You can use the wildcard character (*).
+// preserveClassNames=("com.ant.lib.util.*","com.ant.lib.reports.*", "com.ant.soft.pm.reports2.*")
+
+//////////////////////////////////////////////////////////////////////////////
+// Classes that are used by your application,
+// but should not be included in the obfuscated jar file.
+// The obfuscator also ensures that references to these classes continue to
+// work ("referencing" includes calling, subclassing and implementing). 
+// Note: Any part of these libraries that is actually used must be in the
+//       classpath (either system classpath or classpath= line in this file).
+//externalClasses=("com.company.externallibary.*","org.apache.*")
+
+externalClasses=("com.sun.*", "javax.*", "org.apache.*", "com.lowagie.*", "org.*", "dori.*")
+
+
+//////////////////////////////////////////////////////////////////////////////
+// Locations of resource files.
+// If you want resource files (images, properties files, ...) to be included
+// in the jar file, specify the resource directories or archives here.
+// Do NOT specify individual resources files (these will be interpreted as
+// archives).
+// Note: Directories will be scanned recursively.
+// Note: .class files are excluded automatically.
+// Note: You will usually want to reuse entries from the classpath= line
+//       (classes and resources are often bundled in the same jar files).
+
+resources=(".")
+
+//////////////////////////////////////////////////////////////////////////////
+// Advanced obfuscation features.
+
+encryptStrings=false  // You can try to set this to false for troubleshooting
+

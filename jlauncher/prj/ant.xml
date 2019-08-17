@@ -1,0 +1,35 @@
+<project name="LAUNCHER-BUILD" default="make-all-jars" basedir="./..">
+               <!-- basedir is developpement -->
+  <!-- set global properties for this build -->
+  <property name="jarPrefix" value="launcher"/>
+  <property name="rootFolder" location="."/>
+    <property name="sdk_home" location="${java.home}"/>
+
+  <target name="clean" description="clean build folder" >
+    <!-- <delete dir="build/dist"/> -->
+  </target>
+
+  <target name="init" description="create dist folder" >
+    <mkdir dir="build"/>
+  </target>
+
+  <target name="make-src-jar" depends="init" description="builds the src jar" >
+    <jar destfile="build/${jarPrefix}-src.jar" >
+        <fileset dir="src"/>
+    </jar>
+    <jar destfile="build/${jarPrefix}-src.jar" basedir="src"/>
+  </target>
+
+    <target name="make-run-jar" depends="init" description="builds the jar" >
+      <jar destfile="build/run.jar">
+          <manifest>
+              <attribute name="Main-Class" value="net.vpc.toolbox.jlauncher.JLauncher"/>
+          </manifest>
+          <fileset dir="classes" excludes=".*" />
+      </jar>
+    </target>
+
+  <target name="make-all-jars" depends="clean,make-src-jar,make-run-jar" description="builds all jars"/>
+
+</project>
+

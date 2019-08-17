@@ -1,0 +1,391 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.vpc.toolbox.jchrono;
+
+import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+
+/**
+ * Application View (of the MVC Design Pattern)
+ *
+ * @author Taha Ben Salah
+ */
+public class ChronoPanel extends javax.swing.JPanel {
+
+    private ChronoController controller = new ChronoController();
+    private static DecimalFormat I2 = new DecimalFormat("00");
+    private static DecimalFormat I3 = new DecimalFormat("000");
+
+    private String formatPeriodS(Period period) {
+        return I2.format(period.getHours()) + ":"
+                + I2.format(period.getMinutes()) + ":"
+                + I2.format(period.getSeconds());
+    }
+
+    private String formatPeriodMS(Period period) {
+        return I2.format(period.getHours()) + ":"
+                + I2.format(period.getMinutes()) + ":"
+                + I2.format(period.getSeconds()) + ":"
+                + I3.format(period.getMilliSeconds());
+    }
+
+    /**
+     * Creates new form ChronoPanel
+     */
+    public ChronoPanel() {
+        initComponents();
+        timeField.setEditable(false);
+        workCounterAverageTime.setEditable(false);
+        workCounterNumberField.setEditable(false);
+        workCounterCurrentTime.setEditable(false);
+        workCounterLastTime.setEditable(false);
+        workCounterjProgressBar.setStringPainted(true);
+        controller.addChronoListener(new ChronoListener() {
+
+            public void timeChanged(Period period) {
+                updateUIStep();
+            }
+
+            public void started() {
+                updateUI(true);
+            }
+
+            public void stopped() {
+                updateUI(false);
+            }
+
+            public void reset() {
+                updateUI(false);
+            }
+        });
+        controller.addPropertyChangeListener(new PropertyChangeListener() {
+
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateUIStep();
+            }
+        });
+        workCounterMaxField.addFocusListener(new FocusListener() {
+
+            public void focusGained(FocusEvent e) {
+                workCounterMaxField.setSelectionStart(0);
+                workCounterMaxField.setSelectionEnd(workCounterMaxField.getText().length());
+            }
+
+            public void focusLost(FocusEvent e) {
+                try {
+                    long v = Long.parseLong(workCounterMaxField.getText());
+                    if (v > 0) {
+                        controller.getModel().setWorkMax(v);
+                        return;
+                    }
+                } catch (Exception ex) {
+                    //
+                }
+                workCounterMaxField.setText("");
+            }
+        });
+        workCounterjProgressBar.setMinimum(0);
+        workCounterjProgressBar.setMaximum(1000);
+        updateUI(false);
+        updateUIStep();
+    }
+
+    protected void updateUI(boolean running) {
+        startButton.setEnabled(!running);
+        stopButton.setEnabled(running);
+        resetButton.setEnabled(running);
+        workCounterStepButton.setEnabled(running);
+        workCounterAverageTimeLabel.setEnabled(running);
+        workCounterjProgressBar.setEnabled(running && controller.getModel().getWorkMax() > 0);
+        workCounterOnLabel.setEnabled(running);
+        workCounterMaxField.setEnabled(!running);
+        workCounterCurrentTimeLabel.setEnabled(running);
+        workCounterLastTimeLabel.setEnabled(running);
+    }
+
+    protected void updateUIStep() {
+        ChronoModel model = controller.getModel();
+        timeField.setText(formatPeriodS(model.getPeriod()));
+        long c = model.getWorkCount();
+        long m = model.getWorkMax();
+        long rest = m - c;
+        workCounterNumberField.setText(String.valueOf(c));
+        workCounterAverageTime.setText(formatPeriodMS(controller.getModel().getWorkAverageTime()));
+        workCounterCurrentTime.setText(formatPeriodS(controller.getModel().getCurrentPeriod()));
+        workCounterLastTime.setText(formatPeriodS(controller.getModel().getLastPeriod()));
+        if (m > 0) {
+            workCounterjProgressBar.setValue((int) (workCounterjProgressBar.getMaximum() * c / m));
+        } else {
+            workCounterjProgressBar.setValue(0);
+        }
+        if (rest > 0) {
+            workCounterjProgressBar.setString("remains " + rest);
+        } else {
+            workCounterjProgressBar.setString("");
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        startButton = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        timeField = new javax.swing.JTextField();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        workCounterPanel = new javax.swing.JPanel();
+        workCounterStepButton = new javax.swing.JButton();
+        workCounterNumberField = new javax.swing.JTextField();
+        workCounterAverageTime = new javax.swing.JTextField();
+        workCounterAverageTimeLabel = new javax.swing.JLabel();
+        workCounterOnLabel = new javax.swing.JLabel();
+        workCounterMaxField = new javax.swing.JTextField();
+        workCounterjProgressBar = new javax.swing.JProgressBar();
+        workCounterCurrentTimeLabel = new javax.swing.JLabel();
+        workCounterCurrentTime = new javax.swing.JTextField();
+        workCounterLastTime = new javax.swing.JTextField();
+        workCounterLastTimeLabel = new javax.swing.JLabel();
+        quitButton = new javax.swing.JButton();
+        aboutButton = new javax.swing.JButton();
+
+        startButton.setText("Start");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
+
+        stopButton.setText("Stop");
+        stopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopButtonActionPerformed(evt);
+            }
+        });
+
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
+
+        timeField.setFont(new java.awt.Font("Dialog", 0, 64)); // NOI18N
+        timeField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        timeField.setText("00:00:00");
+
+        workCounterStepButton.setText("Task Done");
+        workCounterStepButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workCounterStepButtonActionPerformed(evt);
+            }
+        });
+
+        workCounterNumberField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        workCounterNumberField.setText("0");
+
+        workCounterAverageTime.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        workCounterAverageTime.setText("0");
+
+        workCounterAverageTimeLabel.setText("Average Time");
+
+        workCounterOnLabel.setText("over");
+
+        workCounterMaxField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        workCounterMaxField.setText("0");
+
+        workCounterCurrentTimeLabel.setText("Task Time");
+
+        workCounterCurrentTime.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        workCounterCurrentTime.setText("0");
+
+        workCounterLastTime.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        workCounterLastTime.setText("0");
+
+        workCounterLastTimeLabel.setText("Last Time");
+
+        javax.swing.GroupLayout workCounterPanelLayout = new javax.swing.GroupLayout(workCounterPanel);
+        workCounterPanel.setLayout(workCounterPanelLayout);
+        workCounterPanelLayout.setHorizontalGroup(
+            workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(workCounterPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(workCounterPanelLayout.createSequentialGroup()
+                        .addComponent(workCounterStepButton)
+                        .addGap(6, 6, 6)
+                        .addComponent(workCounterNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(workCounterOnLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(workCounterMaxField, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(workCounterjProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(workCounterPanelLayout.createSequentialGroup()
+                        .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(workCounterAverageTimeLabel)
+                            .addComponent(workCounterCurrentTimeLabel)
+                            .addComponent(workCounterLastTimeLabel))
+                        .addGap(26, 26, 26)
+                        .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(workCounterAverageTime)
+                            .addComponent(workCounterCurrentTime, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                            .addComponent(workCounterLastTime)))))
+        );
+        workCounterPanelLayout.setVerticalGroup(
+            workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(workCounterPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(workCounterOnLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(workCounterMaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(workCounterStepButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(workCounterNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addComponent(workCounterjProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(workCounterCurrentTimeLabel)
+                    .addComponent(workCounterCurrentTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(workCounterLastTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(workCounterLastTimeLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(workCounterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(workCounterPanelLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(workCounterAverageTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(workCounterAverageTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Task Details", workCounterPanel);
+
+        quitButton.setText("Quit");
+        quitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitButtonActionPerformed(evt);
+            }
+        });
+
+        aboutButton.setText("?");
+        aboutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(timeField)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stopButton, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(aboutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quitButton)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(timeField, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startButton)
+                    .addComponent(stopButton)
+                    .addComponent(resetButton))
+                .addGap(12, 12, 12)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(quitButton)
+                    .addComponent(aboutButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        Toolkit.getDefaultToolkit().beep();
+        controller.start();
+    }//GEN-LAST:event_startButtonActionPerformed
+
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        Toolkit.getDefaultToolkit().beep();
+        controller.stop();
+    }//GEN-LAST:event_stopButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        Toolkit.getDefaultToolkit().beep();
+        controller.reset();
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void workCounterStepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workCounterStepButtonActionPerformed
+        Toolkit.getDefaultToolkit().beep();
+        controller.workStep();
+    }//GEN-LAST:event_workCounterStepButtonActionPerformed
+
+    private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_quitButtonActionPerformed
+
+    private void aboutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutButtonActionPerformed
+        JOptionPane.showMessageDialog(this, 
+                "<html><body>"
+                + "<h1>JChronometer "+App.getVersion()+"</h1>"
+                + "<p><b>Very Simple Chronometer App</b></p>"
+                + "<p>(c) 2012, Taha Ben Salah</p>"
+                + "<p>http://tahabensalah.net</p>"
+                + "<p>License: GNU General Public License Version 2</p>"
+                + "</body>"
+                + "</html>"
+                ,"About...",JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_aboutButtonActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aboutButton;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton quitButton;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JButton startButton;
+    private javax.swing.JButton stopButton;
+    private javax.swing.JTextField timeField;
+    private javax.swing.JTextField workCounterAverageTime;
+    private javax.swing.JLabel workCounterAverageTimeLabel;
+    private javax.swing.JTextField workCounterCurrentTime;
+    private javax.swing.JLabel workCounterCurrentTimeLabel;
+    private javax.swing.JTextField workCounterLastTime;
+    private javax.swing.JLabel workCounterLastTimeLabel;
+    private javax.swing.JTextField workCounterMaxField;
+    private javax.swing.JTextField workCounterNumberField;
+    private javax.swing.JLabel workCounterOnLabel;
+    private javax.swing.JPanel workCounterPanel;
+    private javax.swing.JButton workCounterStepButton;
+    private javax.swing.JProgressBar workCounterjProgressBar;
+    // End of variables declaration//GEN-END:variables
+}

@@ -1,0 +1,48 @@
+###########
+## sample JLauncher Config File
+## include in classpath all jar files in the current folder
+## and also jar files in lib folder
+## '!' at the and of the first filter means that '*.jar' filter must match at least one resource
+###########
+jlauncher.classlib:*.jar!;[lib/*.jar]
+
+###########
+## alternative jre
+###########
+#jlauncher.java.home:/usr/java/jdk1.5.0_07
+
+###########
+## minimum jvm version
+###########
+jlauncher.java.version:1.4
+
+###########
+### uncomment the following line for debugging JLauncher Command Transcription
+###########
+#-jlauncher.echo:win:echo
+
+###########
+## jvm options goes here
+## examples
+##     for minimum heap size of 92 Mega bytes
+##         -Xms92M
+##     for maximum heap size of 512 Mega bytes
+##         -Xmx512M
+###########
+#jvm.arg=Xms92M
+#jvm.argXmx512M
+
+
+###########
+## fully qualified main class name
+###########
+jlauncher.main.class:fully.qualified.mainclass.Name
+
+###########
+## put here application arguments, one argument per line
+## example
+## appp.arg=arg1
+## appp.arg=arg2
+## appp.arg=arg3
+## ...
+###########

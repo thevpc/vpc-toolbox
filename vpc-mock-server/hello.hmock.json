@@ -1,0 +1,7 @@
+{
+  "code": 200,
+  "attributes": {},
+  "request": "/hello",
+  "contentType": "application/vnd.api+json",
+  "text": "{}"
+}

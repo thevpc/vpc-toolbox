@@ -1,0 +1,77 @@
+! ** JCreator Project File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.10"
+LABEL := "launcher"
+JDKPROFILE := "j2sdk1.4.2"
+ACTIVE := "0"
+OUTPUTPATH := "classes"
+COMPILER := "<Default>"
+
+! Start RunTime Configuration Structure
+#[BeginRunTime]LABEL := "<Default>" RUNAPPLIC := "" RUNAPPLET := "" PARAM := "" RUN := "com.ant.lib.launcher.Launcher" CHECK := "10" #[EndRunTime]
+! Start Required Libraries Structure
+
+! Start Project Folder Structure
+#[BeginFolder]
+LABEL := "Root"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "com"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "ant"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "lib"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "launcher"
+FILTER := ""
+
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\Launcher.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\LaunchUtils.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\NullOutput.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\ProcessTracer.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\RemoteResourceServerProvider.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\ResourceProvider.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\RRSUrl.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\SimpleStream.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\WindowTextOutput.java" #[EndFile]
+#[BeginFile]SOURCE := "src\\com\\ant\\lib\\launcher\\ClasspathMaker.java" #[EndFile]
+#[EndFolder]
+#[EndFolder]
+#[EndFolder]
+#[EndFolder]
+#[BeginFolder]
+LABEL := "messages"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "com"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "ant"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "lib"
+FILTER := ""
+
+#[BeginFolder]
+LABEL := "launcher"
+FILTER := ""
+
+#[BeginFile]SOURCE := "resources\\messages\\com\\ant\\lib\\launcher\\HelpContents.html" #[EndFile]
+#[BeginFile]SOURCE := "resources\\messages\\com\\ant\\lib\\launcher\\Launcher.properties" #[EndFile]
+#[EndFolder]
+#[EndFolder]
+#[EndFolder]
+#[EndFolder]
+#[EndFolder]
+#[EndFolder]

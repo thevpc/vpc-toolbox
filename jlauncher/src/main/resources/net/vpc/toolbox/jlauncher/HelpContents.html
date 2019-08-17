@@ -1,0 +1,74 @@
+<HTML>
+<BODY>
+<H2>Universal Java VM launcher version 1.3</H2>
+<BR><U>Syntax :</U>
+<BR><B><Font color=RED>java net.vpc.toolbox.jlauncher.JLauncher [jlauncher.option1=value1 jlauncher.option2=value2 ...] [jvm.arg=value1 jvm.arg=value2 ...] jlauncher.main=&lt;fullClassName&gt; [app.arg=value1,app.arg=value2...]</Font></B>
+<BR>Launch the java program defined by args
+<BR>
+<BR>
+<BR>args may be :
+<BR><B>-JVM?[=win]</B>
+<PRE>
+     Show this help and exit
+     if win value is specified, a html help will be provided
+</PRE>
+<BR><B>jlauncher.argsfile=<Font color=blue>&lt;args file name&gt;</Font></B>
+<PRE>
+     Load args from given file. if '-JVMargsfile' was never specified, file run.properties will be loaded if ever found
+</PRE>
+<BR><B>jlauncher.?<Font color=blue>on|off</Font></B>
+<PRE>
+     when <U>on</U>  : following args are JVM args untill JVMmain is reached
+     when <U>off</U> : following args are Application args
+</PRE>
+<B>jlauncher.type=<Font color=blue>console|window</Font></B>
+<PRE>
+     when <U>console</U> : Show console (use java.exe on Windows)
+     when <U>window</U> : Hide console (use javaw.exe on Windows)
+</PRE>
+<BR><B>jlauncher.echo=<Font color=blue>on|off|win|&lt;file name&gt;</Font></B>
+<PRE>
+     when <U>on</U>  : Set launcher Verbose mode to ON. traces will be written into standard output stream
+     when <U>off</U> : Set launcher Verbose mode to OFF. no trace
+     when <U>win</U> : Set launcher Verbose mode to ON. traces will be written into standard window
+     when <U>&lt;file name&gt;</U>  : Set launcher Verbose mode to ON. traces will be written into log file named &lt;file name&gt;
+</PRE>
+<BR><B>jlauncher.out=<Font color=blue>&lt;out file name&gt;[;&lt;err file name&gt;]</Font></B>
+<PRE>
+     Define the standard output file of the new process created
+     when &lt;file name&gt; is on
+          Set launcher Verbose mode to ON. traces will be written into standard output stream
+     when &lt;file name&gt; is off
+          Set launcher Verbose mode to OFF. no trace
+     when &lt;file name&gt; is win
+          Set launcher Verbose mode to ON. traces will be written into standard window
+     otherwise
+          Set launcher Verbose mode to ON. traces will be written into log file named &lt;file name&gt;
+</PRE>
+<BR><B>jlauncher.java.home=<Font color=blue>&lt;java_home&gt;</Font></B>
+<PRE>
+     Define the java version (java home dir) to use
+</PRE>
+<BR><B>jlauncher.java.version.min=<Font color=blue>&lt;required_java_version&gt;</Font></B>
+<PRE>
+     Define the minimum required java version. Program will not be launched if an older version is found
+</PRE>
+<BR><B>jlauncher.Mmain.class=<Font color=blue>&lt;main class&gt;</Font> or -JVMmain=<Font color=blue>&lt;main class&gt;</Font></B>
+<PRE>
+     [mandatory] Define the class to launch
+</PRE>
+<BR><B>jlauncher.classlib=<Font color=blue>&lt;class lib&gt;</Font> or -JVMclasspath=<Font color=blue>&lt;class path&gt;</Font></B>
+<PRE>
+     Define the classpath to use.
+     paths should be separated with ';'
+     When <U>file.jar</U> or <U>file.zip</U>  : file pah wii be included in the classpath
+     When <U>ordinary folder</U> : folder will be included as a root af a classpath if and only if it does not contain a file named <Font color=blue>jars</Font>
+     when <U>folder including a file named 'jars'</U> all jars and zip files included in the folder will be included automatically
+                   if such folder contains some other sub folders, these folder will been added following the same rules sorted in the alphabetic order
+</PRE>
+<BR><B>jlauncher.workdir=<Font color=blue>&lt;work dir name&gt;</Font></B>
+<PRE>
+     Define the working directory of the new process created
+</PRE>
+</BODY>
+</HTML>

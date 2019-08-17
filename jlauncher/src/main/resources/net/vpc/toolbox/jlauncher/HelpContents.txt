@@ -1,0 +1,56 @@
+
+******************************************************************
+*  Universal Java VM Launcher version 1.3 (c)                    *
+******************************************************************
+
+Syntaxe:
+--------
+java net.vpc.toolbox.jlauncher.JLauncher [-JVMoption1=value1 -JVMoption2=value2 ...] -JVMmain=<fullClassName> [AppArgs...]
+
+Launches the java program defined by args
+
+args may be :
+
+-jlauncher.?=<outputType> or -jlauncher.help=<outputType>
+     show this help. outputType is one of "win","window","con","console"
+     
+-jlauncher.macro=<macroExpression>
+     run macro expression
+
+-jlauncher.type=[console|window]
+     when console : Show console (use java.exe on Windows)
+     when window  : Hide console (use javaw.exe on Windows)
+
+-jlauncher.echo=<file name>
+     when <file name> is on
+          Set launcher Verbose mode to ON. traces will be written into standard output stream
+     when <file name> is off
+          Set launcher Verbose mode to OFF. no trace
+     when <file name> is win
+          Set launcher Verbose mode to ON. traces will be written into standard window
+     otherwise
+          Set launcher Verbose mode to ON. traces will be written into log file named <file name>
+
+-jlauncher.java.home=<java_home>
+     Define the java version (java home dir) to use
+
+-jlauncher.java.version=<required_java_version>
+     Define the minimum required java version. Program will not be launched if an older version is found
+
+-jlauncher.main.class=<main class> or -JVMmain=<main class>
+     [mandatory] Define the class to launch
+
+-jlauncher.classlib=<class lib> or -jlauncher.classpath=<class path>
+     Define the classpath to use. paths should be separated with ';'
+           -- file.jar or file.zip will include the file to the classpath
+           -- folder will be included as a root af a classpath if and only if it does not contain a file named 'jars'
+           -- when folder including a file named 'jars', all jars and zip files included in the folder will be included automatically
+                   if such folder contains some other sub folders, these folder will been added following the same rooles sorted in the alphabetic order
+-jlauncher.workdir=<work dir name>
+     Define the working directory of the new process created
+
+-jvm.arg <ARG>
+     Define an argument to pass to the JVM
+
+-app.arg <ARG>
+     Define an argument to pass to the application
